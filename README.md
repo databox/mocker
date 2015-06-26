@@ -1,8 +1,10 @@
 # mocker
 
-[mocker](https://github.com/databox/mocker) mocks API to make life easier.
+[mocker](https://github.com/databox/mocker) mocks API to make our lives easier.
 
 [![Build Status](https://travis-ci.org/databox/mocker.svg)](https://travis-ci.org/databox/mocker)
+
+# Requesting stuff
 
 ## Licence & Author
 

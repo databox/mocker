@@ -5,6 +5,7 @@ import (
 	"io"
 	"time"
 	"errors"
+	"encoding/json"
 )
 
 func onPanic(err error) {
@@ -12,6 +13,28 @@ func onPanic(err error) {
 		panic(err)
 	}
 }
+
+type KPI struct {
+	Key   string
+	Value float32
+	Date  string
+}
+
+type KPIWrap struct {
+	Data []map[string]interface{} `json:"data"`
+}
+
+const AuthPushToken = "secrettoken"
+
+func main() {
+	fmt.Println("Mocker Server \\m/ on", time.Now(), "w/ PushToken =", AuthPushToken);
+
+	http.HandleFunc("/", Push)
+	http.HandleFunc("/lastpushes", LastPushes)
+
+	onPanic(http.ListenAndServe(":1774", nil))
+}
+
 
 func prePushHandler(w *http.ResponseWriter, req *http.Request) {
 	if req.Method != "POST" {
@@ -32,18 +55,18 @@ func prePushHandler(w *http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func PushServer(w http.ResponseWriter, req *http.Request) {
+func Push(w http.ResponseWriter, req *http.Request) {
 	prePushHandler(&w, req)
-
 	io.WriteString(w, "Zdravo svet!\n")
 }
 
-const AuthPushToken = "secrettoken"
+func LastPushes(w http.ResponseWriter, req *http.Request) {
+	p := KPI{
+		Key:"temp.ly",
+		Value: 100.3,
+	}
 
-func main() {
-	fmt.Println("Mocker Server \\m/ on", time.Now(), "w/ PushToken =", AuthPushToken);
-
-	http.HandleFunc("/", PushServer)
-
-	onPanic(http.ListenAndServe(":1774", nil))
+	if err := json.NewEncoder(w).Encode(p); err != nil {
+		panic(err)
+	}
 }

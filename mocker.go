@@ -26,7 +26,7 @@ func prePushHandler(w *http.ResponseWriter, req *http.Request) {
 
 	if pushToken, _, ok := req.BasicAuth(); ok {
 		if pushToken != AuthPushToken {
-			onPanic(errors.New(fmt.Sprintf("Wrong token %s", pushToken)))
+			onPanic(errors.New(fmt.Sprintf("Wrong token \"%s\"", pushToken)))
 			//TODO: Handle wrong token!
 		}
 	}

@@ -5,5 +5,11 @@ sudo: false
 go:
   - 1.4
 
+
+before_script:
+  - go run ./mocker.go &
+  - sleep 2
+
 script:
-  - go test ./*_test.go -v
+  #- go test ./*_test.go -v
+  - ./test_push_api.sh http://127.0.0.1:1447 push_token

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -o x
 
 export DB_HOST="https://push2new.databox.com"
 if [ -n "$1" ]; then DB_HOST=$1; fi
@@ -18,7 +19,7 @@ curl -sk -XPOST -u $DB_TOKEN: \
 
  echo "Pushing without using POST"
 curl -sk -u $DB_TOKEN: \
-    $DB_HOST | python -m json.tool
+    $DB_HOST
 
 echo "Last pushes"
 curl -sk -XPOST -u $DB_TOKEN: \

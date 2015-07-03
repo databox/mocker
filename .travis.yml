@@ -7,7 +7,7 @@ go:
 
 
 before_script:
-  - go run ./mocker.go
+  - go run ./mocker.go &
   - sleep 2
 
 script:
